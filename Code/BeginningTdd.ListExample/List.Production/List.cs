@@ -65,7 +65,15 @@ namespace List.Production
 
 		public void Insert(int index, T item)
 		{
-			throw new NotImplementedException();
+			if (_count == Capacity)
+				EnlargeArray();
+
+			for (int i = _count - 1; i >= index; i--)
+			{
+				_internalArray[i + 1] = _internalArray[i];
+			}
+			_internalArray[index] = item;
+			_count++;
 		}
 
 		public void RemoveAt(int index)

@@ -237,5 +237,26 @@ namespace List.Tests
 				new object[] { new object[] { 1, 2, 3, 4, 3 }, 3, 2 },
 				new object[] { new object[] { null, new object() }, null, 0 }
 			};
+
+		[Theory]
+		[MemberData("InsertTestData")]
+		public void InsertMovesExistingItemsAndInsertsNewOneCorrectly<T>(T[] items, 
+																	     int index,
+																		 T newItem,
+																		 T[] expected)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+								    			 .Build();
+
+			testTarget.Insert(index, newItem);
+
+			Assert.Equal(expected, testTarget);
+		}
+
+		public static readonly TestData InsertTestData = new[]
+			{
+				new object[] { new string[] { "1", "2", "3" }, 1, "87", new string[] { "1", "87", "2", "3" } },
+				new object[] { new string[] { "1", "3", "5", "7" }, 4, "42", new string[] { "1", "3", "5", "7", "42" } }
+			};
     }
 }
