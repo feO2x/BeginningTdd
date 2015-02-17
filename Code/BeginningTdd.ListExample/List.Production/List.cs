@@ -93,6 +93,12 @@ namespace List.Production
 			get { return _internalArray[index];  }
 			set
 			{
+				if (index == _count)
+				{
+					Add(value);
+					return;
+				}
+
 				_internalArray[index] = value;
 			}
 		}

@@ -1,6 +1,7 @@
 ﻿using List.Production;
 using System;
 using System.Collections;
+using System.Linq;
 using Xunit;
 using TestData = System.Collections.Generic.IEnumerable<object[]>;
 
@@ -153,6 +154,26 @@ namespace List.Tests
 			{
 				new object[] { new string[] { "Hello", "There" }, 1, "World" },
 				new object[] { new object[] { 1, 2, 3, 4 }, 3, 87 }
+			};
+
+		[Theory]
+		[MemberData("IndexSetAtEndTestData")]
+		public void ItemIsAddedToTheEndOfTheCollectionWhenIndexIsEqualToCount<T>(T[] items, int index, T newItem)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			testTarget[index] = newItem;
+
+			var expected = items.Concat(new[] { newItem })
+								.ToList();
+			Assert.Equal(expected, testTarget);
+		}
+
+		public static readonly TestData IndexSetAtEndTestData = new[]
+			{
+				new object[] { new string[] { "Foo", "Bar", "Baz" }, 3, "Qux" },
+				new object[] { new object[] { 1, 2, 3, 4, 5 }, 5, 87 }
 			};
     }
 }
