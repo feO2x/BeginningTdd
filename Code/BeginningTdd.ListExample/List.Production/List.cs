@@ -70,7 +70,7 @@ namespace List.Production
 
 		public void Clear()
 		{
-			throw new NotImplementedException();
+			_count = 0;
 		}
 
 		public bool Contains(T item)

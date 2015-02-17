@@ -173,5 +173,24 @@ namespace List.Tests
 
 			Assert.Throws<IndexOutOfRangeException>(() => testTarget[invalidIndex] = 42);
 		}
+
+		[Theory]
+		[MemberData("ClearTestData")]
+		public void ClearEmptiesTheTestTarget<T>(T[] items)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			testTarget.Clear();
+
+			Assert.Empty(testTarget);
+		}
+
+		public static readonly TestData ClearTestData = new[]
+			{
+				new object[] { new object[] { 1, 2, 3, 4, } },
+				new object[] { new object[] { } },
+				new object[] { new string[] { "Hello", "There" } }
+			};
     }
 }
