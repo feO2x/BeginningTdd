@@ -26,5 +26,27 @@ namespace List.Tests
 														      		new object[] { new int[] { 33, 22, 11 } },
 														      		new object[] { new int[] { 76, 103, 105, 87, 66, 53, 89 } }
 														      };
+
+		[Theory]
+		[MemberData("IndexTestDataForAdd")]
+		public void ItemsThatAreAddedMustBeRetrievableViaIndex<T>(T[] itemsToBeAdded,
+			                                                      int index,
+																  T expected)
+		{
+			var testTarget = new List<T>();
+
+			foreach (var item in itemsToBeAdded)
+			{
+				testTarget.Add(item);
+			}
+
+			Assert.Equal(expected, testTarget[index]);
+		}
+
+		public static readonly TestData IndexTestDataForAdd = new[]
+			{
+				new object[] { new int[] {1, 2 ,3 }, 1, 2 },
+				new object[] { new string[] {"Hello", "World" }, 0, "Hello" }
+			};
     }
 }
