@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace List.Production
 {
 	public class List<T>
@@ -13,6 +14,9 @@ namespace List.Production
 
 		public List(int initialCapacity)
 		{
+			if (initialCapacity < 2)
+				throw new ArgumentException("initialCapacity cannot be less than two", nameof(initialCapacity));
+
 			_internalArray = new T[initialCapacity];
 		}
 

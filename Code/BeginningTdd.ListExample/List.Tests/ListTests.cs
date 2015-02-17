@@ -64,5 +64,14 @@ namespace List.Tests
 
 			Assert.True(testTarget.Capacity > 4);
 		}
+
+		[Theory]
+		[InlineData(1)]
+		[InlineData(0)]
+		[InlineData(-42)]
+		public void ConstructorMustThrowExceptionWhenInitialCapacityIsLessThanTwo(int initialCapacity)
+		{
+			Assert.Throws<ArgumentException>(() => new List<int>(initialCapacity));
+		}
     }
 }
