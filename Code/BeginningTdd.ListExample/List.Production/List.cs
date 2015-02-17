@@ -70,6 +70,10 @@ namespace List.Production
 
 		public void Clear()
 		{
+			for (int i = 0; i < _count; i++)
+			{
+				_internalArray[i] = default(T);
+			}
 			_count = 0;
 		}
 

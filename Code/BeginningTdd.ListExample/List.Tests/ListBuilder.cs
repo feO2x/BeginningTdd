@@ -6,7 +6,7 @@ namespace List.Tests
 	{
 		private T[] _items;
 
-		public ListBuilder<T> WithItems(T[] items)
+		public ListBuilder<T> WithItems(params T[] items)
 		{
 			_items = items;
 			return this;
