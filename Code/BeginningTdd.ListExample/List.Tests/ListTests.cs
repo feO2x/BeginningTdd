@@ -118,5 +118,20 @@ namespace List.Tests
 				new object[] { new string[] { "Hello", "World", "Foo" } },
 				new object[] { new object[] { new object(), new object() } }
 			};
+
+		[Theory]
+		[InlineData(1)]
+		[InlineData("Hello")]
+		[InlineData(false)]
+        public void TestTargetImplementsListOfT<T>(T item)
+		{
+			Assert.IsAssignableFrom<System.Collections.Generic.IList<T>>(new List<T>());
+		}
+
+		[Fact]
+		public void IsReadOnlyMustReturnFalse()
+		{
+			Assert.False(new List<int>().IsReadOnly);
+		}
     }
 }

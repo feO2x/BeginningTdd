@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace List.Production
 {
-	public class List<T> : IEnumerable<T>
+	public class List<T> : IList<T>
 	{
 		private int _count;
 		private T[] _internalArray;
@@ -53,6 +53,41 @@ namespace List.Production
 			return GetEnumerator();
 		}
 
+		public int IndexOf(T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Insert(int index, T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RemoveAt(int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Clear()
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Contains(T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void CopyTo(T[] array, int arrayIndex)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Remove(T item)
+		{
+			throw new NotImplementedException();
+		}
+
 		public T this[int index]
 		{
 			get { return _internalArray[index];  }
@@ -61,6 +96,28 @@ namespace List.Production
 		public int Capacity
 		{
 			get { return _internalArray.Length; }
+		}
+
+		public bool IsReadOnly
+		{
+			get
+			{
+				return false;
+			}
+			
+		}
+
+		T IList<T>.this[int index]
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+
+			set
+			{
+				throw new NotImplementedException();
+			}
 		}
 
 		private class ArrayEnumerator : IEnumerator<T>
