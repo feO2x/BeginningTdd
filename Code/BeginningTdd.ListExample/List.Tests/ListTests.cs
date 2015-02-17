@@ -13,12 +13,8 @@ namespace List.Tests
 		[MemberData("CountTestDataForAdd")]
         public void CountReflectsTheNumberOfItemsThatWereAddedToTheList(int[] itemsToAdd)
 		{
-			var testTarget = new List<int>();
-
-			foreach (var item in itemsToAdd)
-			{
-				testTarget.Add(item);
-			}
+			var testTarget = new ListBuilder<int>().WithItems(itemsToAdd)
+												   .Build();
 
 			Assert.Equal(itemsToAdd.Length, testTarget.Count);
 		}
@@ -36,12 +32,8 @@ namespace List.Tests
 			                                                      int index,
 																  T expected)
 		{
-			var testTarget = new List<T>();
-
-			foreach (var item in itemsToBeAdded)
-			{
-				testTarget.Add(item);
-			}
+			var testTarget = new ListBuilder<T>().WithItems(itemsToBeAdded)
+												 .Build();
 
 			Assert.Equal(expected, testTarget[index]);
 		}
@@ -80,11 +72,8 @@ namespace List.Tests
 		[MemberData("ForeachTestData")]
         public void TestTargetMustBeIterableWithForeachLoop<T>(T[] items)
 		{
-			var testTarget = new List<T>();
-			foreach (var item in items)
-			{
-				testTarget.Add(item);
-			}
+			var testTarget = new ListBuilder<T>().WithItems(items)
+											     .Build();
 
 			var index = 0;
 			foreach (var item in testTarget)
@@ -98,11 +87,8 @@ namespace List.Tests
 		[MemberData("ForeachTestData")]
 		public void TestTargetMustBeIterableWithIEnumerableInterface<T>(T[] items)
 		{
-			var testTarget = new List<T>();
-			foreach (var item in items)
-			{
-				testTarget.Add(item);
-			}
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
 
 			var castedTestTarget = (IEnumerable) testTarget;
 
