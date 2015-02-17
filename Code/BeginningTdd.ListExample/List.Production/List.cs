@@ -65,6 +65,11 @@ namespace List.Production
 
 		public void Insert(int index, T item)
 		{
+			if (index > _count)
+				throw new ArgumentOutOfRangeException("index", string.Format("The specified index with value {0} must not be larger than Count ({1})", index, _count));
+			if (index < 0)
+				throw new ArgumentOutOfRangeException("index", string.Format("index with value {0} must not be less than zero", index));
+
 			if (_count == Capacity)
 				EnlargeArray();
 

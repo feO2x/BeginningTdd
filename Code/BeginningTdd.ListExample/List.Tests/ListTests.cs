@@ -258,5 +258,16 @@ namespace List.Tests
 				new object[] { new string[] { "1", "2", "3" }, 1, "87", new string[] { "1", "87", "2", "3" } },
 				new object[] { new string[] { "1", "3", "5", "7" }, 4, "42", new string[] { "1", "3", "5", "7", "42" } }
 			};
+
+		[Theory]
+		[InlineData(-1)]
+		[InlineData(-42)]
+		[InlineData(2)]
+		[InlineData(8)]
+		public void InsertThrowsExceptionWhenInvalidIndexIsSpecified(int invalidIndex)
+		{
+			var testTarget = new List<string>();
+			Assert.Throws<ArgumentOutOfRangeException>(() => testTarget.Insert(invalidIndex, null));
+		}
     }
 }
