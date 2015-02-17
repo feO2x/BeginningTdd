@@ -133,5 +133,26 @@ namespace List.Tests
 		{
 			Assert.False(new List<int>().IsReadOnly);
 		}
+
+		[Theory]
+		[MemberData("IndexSetTestData")]
+		public void ItemCanBeExchangedViaTheIndexOperator<T>(T[] items, int index, T newItem)
+		{
+			var testTarget = new List<T>();
+			foreach (var item in items)
+			{
+				testTarget.Add(item);
+			}
+
+			testTarget[index] = newItem;
+
+			Assert.Equal(newItem, testTarget[index]);
+		}
+
+		public static readonly TestData IndexSetTestData = new[]
+			{
+				new object[] { new string[] { "Hello", "There" }, 1, "World" },
+				new object[] { new object[] { 1, 2, 3, 4 }, 3, 87 }
+			};
     }
 }

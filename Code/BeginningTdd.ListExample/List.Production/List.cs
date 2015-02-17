@@ -91,6 +91,10 @@ namespace List.Production
 		public T this[int index]
 		{
 			get { return _internalArray[index];  }
+			set
+			{
+				_internalArray[index] = value;
+			}
 		}
 
 		public int Capacity
@@ -100,24 +104,8 @@ namespace List.Production
 
 		public bool IsReadOnly
 		{
-			get
-			{
-				return false;
-			}
+			get { return false; }
 			
-		}
-
-		T IList<T>.this[int index]
-		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-
-			set
-			{
-				throw new NotImplementedException();
-			}
 		}
 
 		private class ArrayEnumerator : IEnumerator<T>
