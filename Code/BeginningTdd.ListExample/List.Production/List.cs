@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace List.Production
 {
-	public class List<T>
+	public class List<T> : IEnumerable<T>
 	{
 		private int _count;
 		private T[] _internalArray;
@@ -41,6 +43,16 @@ namespace List.Production
 			_internalArray = newArray;
 		}
 
+		public IEnumerator<T> GetEnumerator()
+		{
+			return new ArrayEnumerator(_internalArray, _count);
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
 		public T this[int index]
 		{
 			get { return _internalArray[index];  }
@@ -49,6 +61,57 @@ namespace List.Production
 		public int Capacity
 		{
 			get { return _internalArray.Length; }
+		}
+
+		private class ArrayEnumerator : IEnumerator<T>
+		{
+			private int _count;
+			private T[] _array;
+			private T _currentItem;
+			private int _currentIndex = -1;
+
+			public ArrayEnumerator(T[] array, int count)
+			{
+				_array = array;
+				_count = count;
+			}
+
+			public T Current
+			{
+				get
+				{
+					return _currentItem;
+				}
+			}
+
+			object IEnumerator.Current
+			{
+				get
+				{
+					return Current;
+				}
+			}
+
+			public void Dispose()
+			{
+				
+			}
+
+			public bool MoveNext()
+			{
+				if (_currentIndex + 1 == _count)
+					return false;
+
+				_currentIndex++;
+				_currentItem = _array[_currentIndex];
+				return true;
+			}
+
+			public void Reset()
+			{
+				_currentIndex = -1;
+				_currentItem = default(T);
+			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using List.Production;
 using System;
+using System.Collections;
 using Xunit;
 using TestData = System.Collections.Generic.IEnumerable<object[]>;
 
@@ -73,5 +74,49 @@ namespace List.Tests
 		{
 			Assert.Throws<ArgumentException>(() => new List<int>(initialCapacity));
 		}
+
+		[Theory]
+		[MemberData("ForeachTestData")]
+        public void TestTargetMustBeIterableWithForeachLoop<T>(T[] items)
+		{
+			var testTarget = new List<T>();
+			foreach (var item in items)
+			{
+				testTarget.Add(item);
+			}
+
+			var index = 0;
+			foreach (var item in testTarget)
+			{
+				Assert.Equal(items[index], item);
+				index++;
+			}
+		}
+
+		[Theory]
+		[MemberData("ForeachTestData")]
+		public void TestTargetMustBeIterableWithIEnumerableInterface<T>(T[] items)
+		{
+			var testTarget = new List<T>();
+			foreach (var item in items)
+			{
+				testTarget.Add(item);
+			}
+
+			var castedTestTarget = (IEnumerable) testTarget;
+
+			var index = 0;
+			foreach (T item in castedTestTarget)
+			{
+				Assert.Equal(items[index], item);
+				index++;
+			}
+		}
+
+		public static readonly TestData ForeachTestData = new[]
+			{
+				new object[] { new string[] { "Hello", "World", "Foo" } },
+				new object[] { new object[] { new object(), new object() } }
+			};
     }
 }
