@@ -209,5 +209,11 @@ namespace List.Tests
 			Assert.False(weakReferenceToItem.TryGetTarget(out retrievedItem));
 			Assert.Null(retrievedItem);
 		}
+
+		[Fact]
+		public void InitialCapacityMustBe4ByDefault()
+		{
+			Assert.Equal(4, new List<string>().Capacity);
+		}
     }
 }

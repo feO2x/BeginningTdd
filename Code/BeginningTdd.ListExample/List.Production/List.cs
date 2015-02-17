@@ -11,7 +11,7 @@ namespace List.Production
 
 		public List()
 		{
-			_internalArray = new T[8];
+			_internalArray = new T[4];
 		}
 
 		public List(int initialCapacity)
