@@ -55,7 +55,12 @@ namespace List.Production
 
 		public int IndexOf(T item)
 		{
-			throw new NotImplementedException();
+			for (int i = 0; i < _count; i++)
+			{
+				if (item.CompareWithHashCodeAndEquals(_internalArray[i]))
+                    return i;
+			}
+			return -1;
 		}
 
 		public void Insert(int index, T item)

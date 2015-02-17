@@ -51,6 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompareWithHashCodeAndEqualsTests.cs" />
+    <Compile Include="EqualityMock.cs" />
     <Compile Include="ListBuilder.cs" />
     <Compile Include="ListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

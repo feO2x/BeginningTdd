@@ -215,5 +215,27 @@ namespace List.Tests
 		{
 			Assert.Equal(4, new List<string>().Capacity);
 		}
+
+		[Theory]
+		[MemberData("IndexOfTestData")]
+		public void IndexOfReturnsValidIndexOrMinusOneWhenItemCannotBeFound<T>(T[] items, 
+																			   T itemBeingSearchedFor, 
+																			   int expectedIndex)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			var actualIndex = testTarget.IndexOf(itemBeingSearchedFor);
+
+			Assert.Equal(expectedIndex, actualIndex);
+		}
+
+		public static readonly TestData IndexOfTestData = new[]
+			{
+				new object[] { new string[] { "Hello", "World" }, "World", 1 },
+				new object[] { new string[] { "Hello", "World" }, "Foo", -1 },
+				new object[] { new object[] { 1, 2, 3, 4, 3 }, 3, 2 },
+				new object[] { new object[] { null, new object() }, null, 0 }
+			};
     }
 }
