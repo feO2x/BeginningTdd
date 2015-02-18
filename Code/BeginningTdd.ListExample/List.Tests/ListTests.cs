@@ -343,5 +343,64 @@ namespace List.Tests
 				new object[] { new object[] { 33, 44, 55 }, 66, new object[] { 33, 44, 55 }, false },
 				new object[] { new object[] { false, true, false, false }, false, new object[] { true, false, false }, true }
 			};
+
+		[Fact]
+		public void CopyToThrowsExceptionWhenArrayIsNull()
+		{
+			var testTarget = new List<object>();
+
+			Assert.Throws<ArgumentNullException>(() => testTarget.CopyTo(null, 0));
+		}
+
+		[Theory]
+		[InlineData(-1)]
+		[InlineData(-42)]
+		[InlineData(-3)]
+		public void CopyToThrowsExceptionWhenIndexIsNull(int invalidIndex)
+		{
+			var testTarget = new List<object>();
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => testTarget.CopyTo(new object[4], invalidIndex));
+		}
+
+		[Theory]
+		[MemberData("CopyToTestData")]
+		public void CopyToCopiesElementsToTargetArrayCorrectly<T>(T[] items, 
+																  T[] targetArray, 
+																  int arrayIndex, 
+																  T[] expectedArray)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			testTarget.CopyTo(targetArray, arrayIndex);
+
+			Assert.Equal(expectedArray, targetArray);
+		}
+
+		public static readonly TestData CopyToTestData = new[]
+			{
+				new object[] { new string[] { "1", "2" }, new string[2], 0, new string[] { "1", "2" } },
+				new object[] { new string[] { "1", "2" }, new string[4], 0, new string[] { "1", "2", null, null } },
+				new object[] { new object[] { 3, 4, 5 }, new object [] { 1, 2, 0, 0, 0 }, 2, new object[] { 1, 2, 3, 4, 5 } }
+			};
+
+		[Theory]
+		[MemberData("CopyToTargetArrayTooSmallTestData")]
+		public void CopyToThrowsExceptionWhenTargetArrayIsTooSmall<T>(T[] items,
+																      T[] targetArray,
+																	  int arrayIndex)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			Assert.Throws<ArgumentException>(() => testTarget.CopyTo(targetArray, arrayIndex));
+		}
+
+		public static readonly TestData CopyToTargetArrayTooSmallTestData = new[]
+			{
+				new object[] { new object[] { 1, 2, 3 }, new object[] { 1 }, 0 },
+				new object[] { new string[] { "Foo", "Bar" }, new string[] {"1", "2", null }, 2 }
+			};
     }
 }

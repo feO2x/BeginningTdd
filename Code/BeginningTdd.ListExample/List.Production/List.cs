@@ -115,7 +115,20 @@ namespace List.Production
 
 		public void CopyTo(T[] array, int arrayIndex)
 		{
-			throw new NotImplementedException();
+			if (array == null)
+				throw new ArgumentNullException(nameof(array));
+			if (arrayIndex < 0)
+				throw new ArgumentOutOfRangeException(nameof(arrayIndex), "arrayIndex must not be less than zero, but you specified " + arrayIndex);
+
+			var numberOfPositionsInArray = array.Length - arrayIndex;
+			if (numberOfPositionsInArray < _count)
+				throw new ArgumentException("The target array is too small because it can only hold " + numberOfPositionsInArray + " items, but " + _count + " would be required.",
+											nameof(array));
+
+			for (int i = 0; i < _count; i++)
+			{
+				array[arrayIndex + i] = _internalArray[i];
+			}
 		}
 
 		public bool Remove(T item)
