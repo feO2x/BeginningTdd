@@ -7,11 +7,11 @@ using TestData = System.Collections.Generic.IEnumerable<object[]>;
 
 namespace List.Tests
 {
-    public class ListTests
-    {
+	public class ListTests
+	{
 		[Theory]
 		[MemberData("CountTestDataForAdd")]
-        public void CountReflectsTheNumberOfItemsThatWereAddedToTheList(int[] itemsToAdd)
+		public void CountReflectsTheNumberOfItemsThatWereAddedToTheList(int[] itemsToAdd)
 		{
 			var testTarget = new ListBuilder<int>().WithItems(itemsToAdd)
 												   .Build();
@@ -20,16 +20,16 @@ namespace List.Tests
 		}
 
 		public static readonly TestData CountTestDataForAdd = new[]
-														      {
-														        	new object[] { new int[] { 1, 2, 3, 4 } },
-														      		new object[] { new int[] { 33, 22, 11 } },
-														      		new object[] { new int[] { 76, 103, 105, 87, 66, 53, 89 } }
-														      };
+															  {
+																	new object[] { new int[] { 1, 2, 3, 4 } },
+																	  new object[] { new int[] { 33, 22, 11 } },
+																	  new object[] { new int[] { 76, 103, 105, 87, 66, 53, 89 } }
+															  };
 
 		[Theory]
 		[MemberData("IndexTestDataForAdd")]
 		public void ItemsThatAreAddedMustBeRetrievableViaIndex<T>(T[] itemsToBeAdded,
-			                                                      int index,
+																  int index,
 																  T expected)
 		{
 			var testTarget = new ListBuilder<T>().WithItems(itemsToBeAdded)
@@ -70,10 +70,10 @@ namespace List.Tests
 
 		[Theory]
 		[MemberData("ForeachTestData")]
-        public void TestTargetMustBeIterableWithForeachLoop<T>(T[] items)
+		public void TestTargetMustBeIterableWithForeachLoop<T>(T[] items)
 		{
 			var testTarget = new ListBuilder<T>().WithItems(items)
-											     .Build();
+												 .Build();
 
 			var index = 0;
 			foreach (var item in testTarget)
@@ -90,7 +90,7 @@ namespace List.Tests
 			var testTarget = new ListBuilder<T>().WithItems(items)
 												 .Build();
 
-			var castedTestTarget = (IEnumerable) testTarget;
+			var castedTestTarget = (IEnumerable)testTarget;
 
 			var index = 0;
 			foreach (T item in castedTestTarget)
@@ -110,7 +110,7 @@ namespace List.Tests
 		[InlineData(1)]
 		[InlineData("Hello")]
 		[InlineData(false)]
-        public void TestTargetImplementsListOfT<T>(T item)
+		public void TestTargetImplementsListOfT<T>(T item)
 		{
 			Assert.IsAssignableFrom<System.Collections.Generic.IList<T>>(new List<T>());
 		}
@@ -218,8 +218,8 @@ namespace List.Tests
 
 		[Theory]
 		[MemberData("IndexOfTestData")]
-		public void IndexOfReturnsValidIndexOrMinusOneWhenItemCannotBeFound<T>(T[] items, 
-																			   T itemBeingSearchedFor, 
+		public void IndexOfReturnsValidIndexOrMinusOneWhenItemCannotBeFound<T>(T[] items,
+																			   T itemBeingSearchedFor,
 																			   int expectedIndex)
 		{
 			var testTarget = new ListBuilder<T>().WithItems(items)
@@ -240,13 +240,13 @@ namespace List.Tests
 
 		[Theory]
 		[MemberData("InsertTestData")]
-		public void InsertMovesExistingItemsAndInsertsNewOneCorrectly<T>(T[] items, 
-																	     int index,
+		public void InsertMovesExistingItemsAndInsertsNewOneCorrectly<T>(T[] items,
+																		 int index,
 																		 T newItem,
 																		 T[] expected)
 		{
 			var testTarget = new ListBuilder<T>().WithItems(items)
-								    			 .Build();
+												 .Build();
 
 			testTarget.Insert(index, newItem);
 
@@ -272,7 +272,7 @@ namespace List.Tests
 
 		[Theory]
 		[MemberData("RemoveAtTestData")]
-		public void RemoveAtRemovesItemsFromTheCollectionCorrectly<T>(T[] items, 
+		public void RemoveAtRemovesItemsFromTheCollectionCorrectly<T>(T[] items,
 																	  int index,
 																	  T[] expected)
 		{
@@ -290,5 +290,17 @@ namespace List.Tests
 				new object[] { new object[] { 1, 2, 3, 4, 5 }, 3, new object[] { 1, 2, 3, 5 } },
 				new object[] { new string[] { "Hello", "World", "Foo", "What's up?" }, 3, new string[] { "Hello", "World", "Foo" } }
 			};
-    }
+
+		[Theory]
+		[InlineData(-1)]
+		[InlineData(-42)]
+		[InlineData(2)]
+		[InlineData(10)]
+		public void RemoveAtThrowsExceptionWhenInvalidIndexIsPassed(int invalidIndex)
+		{
+			var testTarget = new List<string>();
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => testTarget.RemoveAt(invalidIndex));
+		}
+	}
 }

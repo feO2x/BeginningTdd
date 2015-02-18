@@ -83,6 +83,11 @@ namespace List.Production
 
 		public void RemoveAt(int index)
 		{
+			if (index < 0)
+				throw new ArgumentOutOfRangeException("index", string.Format("The index with value {0} must not be less than zero", index));
+			if (index >= _count)
+				throw new ArgumentOutOfRangeException("index", string.Format("You did not specify a valid index. Your value: {0}, Count of Collection: {1}", index, _count));
+
 			_internalArray[index] = default(T);
 
 			for (int i = index; i < _count - 1; i++)
