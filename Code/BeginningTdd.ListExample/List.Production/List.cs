@@ -110,7 +110,7 @@ namespace List.Production
 
 		public bool Contains(T item)
 		{
-			throw new NotImplementedException();
+			return IndexOf(item) != -1;
 		}
 
 		public void CopyTo(T[] array, int arrayIndex)

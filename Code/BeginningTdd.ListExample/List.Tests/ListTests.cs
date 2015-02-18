@@ -302,5 +302,26 @@ namespace List.Tests
 
 			Assert.Throws<ArgumentOutOfRangeException>(() => testTarget.RemoveAt(invalidIndex));
 		}
-	}
+
+		[Theory]
+		[MemberData("ContainsTestData")]
+        public void ContainsRetrievesItemsCorrectly<T>(T[] items, T itemBeingSearchedFor, bool expected)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			var actual = testTarget.Contains(itemBeingSearchedFor);
+
+			Assert.Equal(expected, actual);
+		}
+
+		public static readonly TestData ContainsTestData = new[]
+			{
+				new object[] { new string[] { "1", "2", "3" }, "1", true },
+				new object[] { new object[] { 1, 2, 3, 4, 5 }, 42, false },
+				new object[] { new object[] { 33, 42, 27, 42, 55 }, 42, true },
+				new object[] { new object[] { 1, 2, 3, 4 }, 4, true },
+				new object[] { new object[] { new object(), null }, null, true }
+			};
+    }
 }
