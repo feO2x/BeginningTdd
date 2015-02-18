@@ -269,5 +269,26 @@ namespace List.Tests
 			var testTarget = new List<string>();
 			Assert.Throws<ArgumentOutOfRangeException>(() => testTarget.Insert(invalidIndex, null));
 		}
+
+		[Theory]
+		[MemberData("RemoveAtTestData")]
+		public void RemoveAtRemovesItemsFromTheCollectionCorrectly<T>(T[] items, 
+																	  int index,
+																	  T[] expected)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			testTarget.RemoveAt(index);
+
+			Assert.Equal(expected, testTarget);
+		}
+
+		public static readonly TestData RemoveAtTestData = new[]
+			{
+				new object[] { new string[] { "Foo", "Bar", "Baz" }, 1, new string[] { "Foo", "Baz" } },
+				new object[] { new object[] { 1, 2, 3, 4, 5 }, 3, new object[] { 1, 2, 3, 5 } },
+				new object[] { new string[] { "Hello", "World", "Foo", "What's up?" }, 3, new string[] { "Hello", "World", "Foo" } }
+			};
     }
 }

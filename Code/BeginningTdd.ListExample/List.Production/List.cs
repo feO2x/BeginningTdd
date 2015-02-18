@@ -83,7 +83,15 @@ namespace List.Production
 
 		public void RemoveAt(int index)
 		{
-			throw new NotImplementedException();
+			_internalArray[index] = default(T);
+
+			for (int i = index; i < _count - 1; i++)
+			{
+				_internalArray[i] = _internalArray[i + 1];
+				if (i == _count - 2)
+					_internalArray[i + 1] = default(T);
+			}
+			_count--;
 		}
 
 		public void Clear()
