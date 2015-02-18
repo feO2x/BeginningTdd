@@ -323,5 +323,25 @@ namespace List.Tests
 				new object[] { new object[] { 1, 2, 3, 4 }, 4, true },
 				new object[] { new object[] { new object(), null }, null, true }
 			};
+
+		[Theory]
+		[MemberData("RemoveTestData")]
+		public void RemoveWorksCorrectly<T>(T[] items, T itemBeingRemoved, T[] expectedCollection, bool expectedResult)
+		{
+			var testTarget = new ListBuilder<T>().WithItems(items)
+												 .Build();
+
+			var actualResult = testTarget.Remove(itemBeingRemoved);
+
+			Assert.Equal(expectedCollection, testTarget);
+			Assert.Equal(expectedResult, actualResult);
+		}
+
+		public static readonly TestData RemoveTestData = new[]
+			{
+				new object[] { new string[] { "1", "2", "3" }, "3", new string[] { "1", "2" }, true },
+				new object[] { new object[] { 33, 44, 55 }, 66, new object[] { 33, 44, 55 }, false },
+				new object[] { new object[] { false, true, false, false }, false, new object[] { true, false, false }, true }
+			};
     }
 }

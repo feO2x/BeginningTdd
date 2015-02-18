@@ -120,7 +120,12 @@ namespace List.Production
 
 		public bool Remove(T item)
 		{
-			throw new NotImplementedException();
+			var indexOfItemBeingRemoved = IndexOf(item);
+			if (indexOfItemBeingRemoved == -1)
+				return false;
+
+			RemoveAt(indexOfItemBeingRemoved);
+			return true;
 		}
 
 		public T this[int index]
