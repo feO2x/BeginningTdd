@@ -17,7 +17,7 @@ namespace List.Production
 		public List(int initialCapacity)
 		{
 			if (initialCapacity < 2)
-				throw new ArgumentException("initialCapacity cannot be less than two", nameof(initialCapacity));
+				throw new ArgumentException("initialCapacity cannot be less than two", "initialCapacity");
 
 			_internalArray = new T[initialCapacity];
 		}
@@ -116,14 +116,14 @@ namespace List.Production
 		public void CopyTo(T[] array, int arrayIndex)
 		{
 			if (array == null)
-				throw new ArgumentNullException(nameof(array));
+				throw new ArgumentNullException("array");
 			if (arrayIndex < 0)
-				throw new ArgumentOutOfRangeException(nameof(arrayIndex), "arrayIndex must not be less than zero, but you specified " + arrayIndex);
+				throw new ArgumentOutOfRangeException("arrayIndex", "arrayIndex must not be less than zero, but you specified " + arrayIndex);
 
 			var numberOfPositionsInArray = array.Length - arrayIndex;
 			if (numberOfPositionsInArray < _count)
 				throw new ArgumentException("The target array is too small because it can only hold " + numberOfPositionsInArray + " items, but " + _count + " would be required.",
-											nameof(array));
+											"array");
 
 			for (int i = 0; i < _count; i++)
 			{
