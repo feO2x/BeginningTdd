@@ -196,8 +196,8 @@ namespace List.Tests
 		[Fact]
 		public void TestTargetMustNotHoldAReferenceToItemsAfterCallingClear()
 		{
-			var item = new object();
-			var weakReferenceToItem = new WeakReference<object>(item);
+			var item = new MarkedType();
+			var weakReferenceToItem = new WeakReference<MarkedType>(item);
 			var testTarget = new ListBuilder<object>().WithItems(item)
 													  .Build();
 
@@ -205,10 +205,15 @@ namespace List.Tests
 
 			item = null;
 			GC.Collect();
-			object retrievedItem = null;
+			MarkedType retrievedItem = null;
 			Assert.False(weakReferenceToItem.TryGetTarget(out retrievedItem));
 			Assert.Null(retrievedItem);
 		}
+
+	    public class MarkedType
+	    {
+	        
+	    }
 
 		[Fact]
 		public void InitialCapacityMustBe4ByDefault()
