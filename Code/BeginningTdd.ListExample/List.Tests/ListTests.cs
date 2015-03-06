@@ -198,8 +198,8 @@ namespace List.Tests
 		{
 			var item = new MarkedType();
 			var weakReferenceToItem = new WeakReference<MarkedType>(item);
-			var testTarget = new ListBuilder<object>().WithItems(item)
-													  .Build();
+			var testTarget = new ListBuilder<MarkedType>().WithItems(item)
+													      .Build();
 
 			testTarget.Clear();
 
