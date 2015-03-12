@@ -147,7 +147,7 @@ namespace List.Production
 			set
 			{
 				if (index > _count)
-					throw new IndexOutOfRangeException(string.Format("index with value {0} must not be larger than Count ({0}).", index, _count));
+					throw new IndexOutOfRangeException(string.Format("index with value {0} must not be larger than Count ({1}).", index, _count));
 
 				if (index == _count)
 				{
