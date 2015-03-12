@@ -125,11 +125,8 @@ namespace List.Tests
 		[MemberData("IndexSetTestData")]
 		public void ItemCanBeExchangedViaTheIndexOperator<T>(T[] items, int index, T newItem)
 		{
-			var testTarget = new List<T>();
-			foreach (var item in items)
-			{
-				testTarget.Add(item);
-			}
+		    var testTarget = new ListBuilder<T>().WithItems(items)
+		                                         .Build();
 
 			testTarget[index] = newItem;
 
