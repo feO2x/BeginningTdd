@@ -141,12 +141,12 @@ namespace List.Tests
 
 		[Theory]
 		[MemberData("IndexSetAtEndTestData")]
-		public void ItemIsAddedToTheEndOfTheCollectionWhenIndexIsEqualToCount<T>(T[] items, int index, T newItem)
+		public void ItemIsAddedToTheEndOfTheCollectionWhenIndexIsEqualToCount<T>(T[] items, T newItem)
 		{
 			var testTarget = new ListBuilder<T>().WithItems(items)
 												 .Build();
 
-			testTarget[index] = newItem;
+			testTarget[testTarget.Count] = newItem;
 
 			var expected = items.Concat(new[] { newItem })
 								.ToList();
@@ -155,8 +155,8 @@ namespace List.Tests
 
 		public static readonly TestData IndexSetAtEndTestData = new[]
 			{
-				new object[] { new string[] { "Foo", "Bar", "Baz" }, 3, "Qux" },
-				new object[] { new object[] { 1, 2, 3, 4, 5 }, 5, 87 }
+				new object[] { new string[] { "Foo", "Bar", "Baz" }, "Qux" },
+				new object[] { new object[] { 1, 2, 3, 4, 5 }, 87 }
 			};
 
 		[Theory]
