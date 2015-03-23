@@ -14,7 +14,7 @@ namespace List.Tests
 			first.CompareWithHashCodeAndEquals(second);
 
 			Assert.Equal(1, first.NumberOfGetHashCodeCalls);
-			Assert.Equal(1, first.NumberOfGetHashCodeCalls);
+			Assert.Equal(1, second.NumberOfGetHashCodeCalls);
 		}
 
 		public static readonly TestData NotNullTestData = new[]
